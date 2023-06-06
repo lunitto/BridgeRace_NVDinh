@@ -10,6 +10,7 @@ TagManager:
   - brick
   - stage
   - bridgeTrigger
+  - win
   layers:
   - Default
   - TransparentFX

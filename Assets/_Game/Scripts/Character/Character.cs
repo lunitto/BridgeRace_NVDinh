@@ -20,7 +20,7 @@ public class Character : ObjectColor
     public bool isFalling = false;
     public float maxPosY = 20f;
     public bool onBridge = false;
-    public bool onElevator = false;
+    
     public Stage stage;
 
 
@@ -136,17 +136,17 @@ public class Character : ObjectColor
             OnNewStage(other.gameObject.GetComponent<Stage>());
         }
 
-        if (other.gameObject.CompareTag("character"))
-        {
-            if (other.gameObject.GetComponent<Character>().baloBrickObjectList.Count > baloBrickObjectList.Count
-                && !other.gameObject.GetComponent<Character>().onBridge && !this.onBridge && !this.isFalling)
-            {
-                FallAllBricks();
-                characterMagnet.gameObject.SetActive(false);
-                isFalling = true;
-                StartCoroutine(WaitAndStandUp());
-            }
-        }
+        //if (other.gameObject.CompareTag("character"))
+        //{
+        //    if (other.gameObject.GetComponent<Character>().baloBrickObjectList.Count > baloBrickObjectList.Count
+        //        && !other.gameObject.GetComponent<Character>().onBridge && !this.onBridge && !this.isFalling)
+        //    {
+        //        FallAllBricks();
+        //        characterMagnet.gameObject.SetActive(false);
+        //        isFalling = true;
+        //        StartCoroutine(WaitAndStandUp());
+        //    }
+        //}
         if (other.gameObject.CompareTag("bridgeTrigger"))
         {
             onBridge = true;

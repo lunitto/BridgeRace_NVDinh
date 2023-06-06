@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : Character
@@ -15,7 +12,7 @@ public class PlayerController : Character
     public float raycastLength;
     public void Start()
     {
-        speed = 20f;
+        speed = 15f;
         ChangeColor(MaterialType.Blue);
     }
 
@@ -24,7 +21,7 @@ public class PlayerController : Character
 
         base.Update();
         isGround = CheckGround();
-        
+
 
         if (isFalling == false && joystick.activeSelf)
         {
@@ -83,6 +80,14 @@ public class PlayerController : Character
         }
     }
 
+    protected override void OnNewStage(Stage stage)
+    {
+        base.OnNewStage(stage);
+
+
+        maxPosY = transform.position.y;
+
+    }
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
@@ -92,9 +97,9 @@ public class PlayerController : Character
             if (other.gameObject.GetComponent<Step>().materialType != this.materialType)
             {
                 //Debug.Log("len cau thang");
-                if (baloBrickObjectList.Count > 0 ) // && other.gameObject.transform.TransformPoint(other.transform.localPosition).y > maxPosY)
+                if (baloBrickObjectList.Count > 0 && other.gameObject.transform.TransformPoint(other.transform.localPosition).y > maxPosY)
                 {
-                    Debug.Log("len cau thang");
+                    //Debug.Log("len cau thang");
                     StartCoroutine(other.gameObject.GetComponent<Step>().ChangeColorStep(materialType));
                     DropBrick();
                     maxPosY = other.gameObject.transform.TransformPoint(other.transform.localPosition).y;
@@ -105,21 +110,38 @@ public class PlayerController : Character
                 maxPosY = other.gameObject.transform.TransformPoint(other.transform.localPosition).y;
             }
         }
-        
+        if (other.gameObject.CompareTag("win"))
+        {
+            GameManager.Instance.isWin = true;
+            UIManager.instance.HideJoystick();
+            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            ChangeAnim("win");
+            //Debug.Log("win");
+        }
+
     }
 
     private bool CheckGround()
     {
+        Debug.DrawLine(transform.position, transform.position + Vector3.down * 1.1f, Color.red);
         RaycastHit hit;
         if (Physics.Raycast(transform.position, -transform.up, out hit, raycastLength))
         {
             return true;
-            
         }
         else
         {
             return false;
-            
+
+        }
+    }
+
+    protected override void OnTriggerExit(Collider other)
+    {
+        base.OnTriggerExit(other);
+        if (other.gameObject.CompareTag("bridgeTrigger"))
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 }
