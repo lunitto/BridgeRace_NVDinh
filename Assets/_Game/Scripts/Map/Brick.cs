@@ -14,12 +14,12 @@ public class Brick : ObjectColor
     }
     public IEnumerator MoveToBalo(Vector3 target)
     {
-        //float duration = 0.3f;
-        //float elapsedTime = 0f;
-        //while (elapsedTime < duration)
+        float duration = 0.3f;
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
         {
-            //elapsedTime += Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, target, 1f); //(float)(elapsedTime / duration));
+            elapsedTime += Time.deltaTime;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, target, (float)(elapsedTime / duration));
             transform.localRotation = Quaternion.Euler(Vector3.zero);
             yield return null;
         }

@@ -34,11 +34,7 @@ public class Character : ObjectColor
     }
     protected virtual void Update()
     {
-        //if (GameManger.Instance.isWin)
-        //{
-        //    ChangeAnim(CachedString.WIN);
-        //    return;
-        //}
+        
         if (isFalling)
         {
             ChangeAnim("fall");
@@ -126,27 +122,14 @@ public class Character : ObjectColor
     protected virtual void OnTriggerEnter(Collider other)
     {
 
-        //if (other.gameObject.CompareTag(CachedString.DOOR_HIGH))
-        //{
-        //    StartCoroutine(other.gameObject.GetComponent<DoorHight>().Open());
-        //}
+       
         if (other.gameObject.CompareTag("stage"))
         {
             stage = other.gameObject.GetComponent<Stage>();
             OnNewStage(other.gameObject.GetComponent<Stage>());
         }
 
-        //if (other.gameObject.CompareTag("character"))
-        //{
-        //    if (other.gameObject.GetComponent<Character>().baloBrickObjectList.Count > baloBrickObjectList.Count
-        //        && !other.gameObject.GetComponent<Character>().onBridge && !this.onBridge && !this.isFalling)
-        //    {
-        //        FallAllBricks();
-        //        characterMagnet.gameObject.SetActive(false);
-        //        isFalling = true;
-        //        StartCoroutine(WaitAndStandUp());
-        //    }
-        //}
+        
         if (other.gameObject.CompareTag("bridgeTrigger"))
         {
             onBridge = true;
